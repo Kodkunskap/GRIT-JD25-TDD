@@ -3,6 +3,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,6 +17,14 @@ public class WordCounterTest {
         this.wordCounter = new WordCounter();
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {""})
+    @NullSource     // tack Iffe!
+    public void nullOrBlankReturnsZero(String input) {
+        int result = this.wordCounter.countWords(input);
+
+        assertEquals(0, result);
+    }
 
     @Test
     @DisplayName("0 on empty string")
